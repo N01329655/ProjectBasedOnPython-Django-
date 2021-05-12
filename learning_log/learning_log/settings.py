@@ -23,9 +23,39 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^6sn2$f&k2=54a0m9bfi^j0kr!r1^iev+zsmzzs+63-z9yr5ax'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
+
 
 ALLOWED_HOSTS = []
+
+## My setting for @log_required 
+LOGIN_URL = '/users/login'
+
+## settings for django-bootstrap3
+BOOTSTRAP3= {
+			'include_jquery' : True,
+			}
+import os
+
+## Settings for Heroku 
+if os.getcwd() == '/app':
+	import dj_database_url
+	DATABASES={
+		'default':dj_database_url.config(default='postgres://localhost')
+		}
+
+	## Support header 'X-Forwarded-Proto' for request.is_secure().
+	SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO','https')
+	
+	##Allowed all hosts
+	ALLOWED_HOSTS = ['*']
+	
+	## Configurating static resources
+	BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+	STATIC_ROOT = 'staticfiles'
+	STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+
 
 
 # Application definition
@@ -39,7 +69,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ## my apps
     'learning_logs',
+    'users',
+    ## external app
+    'bootstrap3',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,3 +159,28 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
