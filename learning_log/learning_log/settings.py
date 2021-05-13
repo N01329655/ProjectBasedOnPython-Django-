@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,6 +25,9 @@ SECRET_KEY = 'django-insecure-^6sn2$f&k2=54a0m9bfi^j0kr!r1^iev+zsmzzs+63-z9yr5ax
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 
 ALLOWED_HOSTS = []
@@ -87,6 +91,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'learning_log.urls'
 
+
+
+
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -112,7 +121,8 @@ WSGI_APPLICATION = 'learning_log.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
+       ##default verion 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -162,6 +172,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.config()}
 
 
 
